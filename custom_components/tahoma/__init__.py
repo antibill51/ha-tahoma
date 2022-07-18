@@ -138,7 +138,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     hass.config_entries.async_setup_platforms(entry, SUPPORTED_PLATFORMS)
 
-    device_registry = await dr.async_get_registry(hass)
+    device_registry = await dr.async_get(hass)
 
     for gateway in setup.gateways:
         _LOGGER.debug("Added gateway (%s)", gateway)
@@ -155,7 +155,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     async def handle_execute_command(call: ServiceCall):
         """Handle execute command service."""
-        entity_registry = await hass.helpers.entity_registry.async_get_registry()
+        entity_registry = await hass.helpers.entity_registry.async_get()
 
         for entity_id in call.data.get("entity_id"):
             entity = entity_registry.entities.get(entity_id)
